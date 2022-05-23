@@ -1,0 +1,12 @@
+﻿CREATE TABLE books
+(
+	book_id INT IDENTITY (1,1) PRIMARY KEY,
+	title VARCHAR (255) NOT NULL,
+	author_id INT NOT NULL,
+	price SMALLMONEY NOT NULL,
+	short_desc VARCHAR (2550),
+	amount SMALLINT NOT NULL,
+	UNIQUE(title),
+
+	CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES authors (author_id) ON DELETE NO ACTION ON UPDATE CASCADE
+);
