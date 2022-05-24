@@ -66,5 +66,6 @@
     <Build Include="BookStore\Tables\authors.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\AddNewBook.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindAllBooks.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookById.sql" />
   </ItemGroup>
 </Project>

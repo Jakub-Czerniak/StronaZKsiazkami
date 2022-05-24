@@ -50,6 +50,25 @@ namespace StronaZKsiazkami.Controllers
             return View();
         }
 
+        public ActionResult BookDetails(int id)
+        {
+            var data = BookProcessor.LoadBook(id);
+            BookModel Book = new BookModel();
+
+            if(data.Count()==0)
+                return View("index");
+
+            Book.Id = data[0].Id;
+            Book.Title = data[0].Title;
+            Book.AuthorFirstName = data[0].Author_first_name;
+            Book.AuthorLastName = data[0].Author_last_name;
+            Book.Description = data[0].Short_desc;
+            Book.Price = data[0].Price;
+            Book.Amount = data[0].Amount;
+
+            return View(Book);
+        }
+
         public ActionResult ViewAllBooks()
         {
             ViewBag.Message = "List of all books.";
@@ -61,6 +80,7 @@ namespace StronaZKsiazkami.Controllers
             {
                 books.Add(new BookModel
                 {
+                    Id = book.Id,
                     Title = book.Title,
                     AuthorFirstName = book.Author_first_name,
                     AuthorLastName = book.Author_last_name,
@@ -74,6 +94,64 @@ namespace StronaZKsiazkami.Controllers
             return View(books);
         }
 
+        public ActionResult AddToCart(int id)
+        {
+            var data = BookProcessor.LoadBook(id);
+            CartItemModel model = new CartItemModel();
+            bool found = false;
 
+            if (Session["cart"] == null)
+            {
+                List<CartItemModel> cartItems = new List<CartItemModel>();
+                cartItems.Add(new CartItemModel 
+                {
+                    BookId = data[0].Id,
+                    Title = data[0].Title,
+                    Count = 1,
+                    Total = data[0].Price
+                }                    
+                    );
+                Session["cart"] = cartItems;
+            }
+            else
+            {
+                List<CartItemModel> cartItems = (List<CartItemModel>)Session["cart"];
+                foreach (var item in cartItems)
+                {
+                    if (item.BookId == id)
+                    {
+                        item.Count += 1;
+                        item.Total +=data[0].Price;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) 
+                {
+                    cartItems.Add(new CartItemModel
+                    {
+                        BookId = data[0].Id,
+                        Title = data[0].Title,
+                        Count = 1,
+                        Total = data[0].Price
+                    }
+                    );
+                }
+
+                Session["cart"] = cartItems;
+            }
+
+            return RedirectToAction("ViewAllBooks");
+        }
+
+        public ActionResult Cart()
+        {
+            ViewBag.Message = "Your shopping cart.";
+
+            if (Session["cart"] == null)
+                return RedirectToAction("ViewAllBooks");
+            return View(Session["cart"]);
+        }
+        
     }
 }

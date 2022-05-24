@@ -8,8 +8,8 @@ namespace StronaZKsiazkami.Models
 {
     public class BookModel
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Książka musi mieć tytuł.")]
-
         public string Title { get; set; }
         [Display(Name = "Author First Name")]
         [Required(ErrorMessage = "Książka musi mieć autora.")]

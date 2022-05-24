@@ -8,6 +8,7 @@ namespace DataLibrary.Models
 {
     public class BookModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Author_first_name { get; set; }
         public string Author_last_name { get; set; }
