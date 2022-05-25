@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<StronaZKsiazkami.Models.CartItemModel>
+@using StronaZKsiazkami.Models;
 
 @{
     ViewBag.Title = "Cart";
@@ -6,9 +7,7 @@
 
 <h2>Cart</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -35,9 +34,16 @@
         @Html.DisplayFor(modelItem => item.Total)
     </td>
     <td>
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        @Html.ActionLink("Delete", "DeleteFromCart", new {  id=item.BookId })
     </td>
 </tr>
 }
+    @{
+        List<CartItemModel> cart = (List<CartItemModel>)Session["cart"];
+        decimal total = cart.Sum(item => item.Total * item.Count);
+        string totalStr = total.ToString("0.##");
+    }
+    Total @totalStr |
+    @Html.ActionLink("Buy", "Buy", new { cart = cart })
 
 </table>

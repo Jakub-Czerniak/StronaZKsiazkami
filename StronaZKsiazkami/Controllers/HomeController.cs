@@ -152,6 +152,43 @@ namespace StronaZKsiazkami.Controllers
                 return RedirectToAction("ViewAllBooks");
             return View(Session["cart"]);
         }
+
+        public ActionResult DeleteFromCart(int id)
+        {
+            List<CartItemModel> cartItems = (List<CartItemModel>)Session["cart"];
+            bool found = false;
+
+            if (Session["cart"] == null)
+            {
+                return RedirectToAction("ViewAllBooks");
+            }
+            else
+            {  
+                for (int i=0;i<cartItems.Capacity;i++)
+                {
+                    if (cartItems[i].BookId == id)
+                    {
+                        cartItems.RemoveAt(i);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    return RedirectToAction("Cart");
+                }
+            }
+
+                Session["cart"] = cartItems;
+
+                return RedirectToAction("Cart");
+        }
+
+        public ActionResult Buy(List<CartItemModel> cart)
+        {
+
+            return RedirectToAction("Cart");
+        }
         
     }
 }

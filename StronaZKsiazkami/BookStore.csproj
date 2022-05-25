@@ -172,6 +172,8 @@
     <Content Include="Views\Home\BookDetails.cshtml" />
     <Content Include="Views\Home\AddToCart.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Home\DeleteFromCart.cshtml" />
+    <Content Include="Views\Home\Buy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
