@@ -10,12 +10,15 @@ namespace StronaZKsiazkami.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Książka musi mieć tytuł.")]
+        [StringLength(255, ErrorMessage = "Title too long.")]
         public string Title { get; set; }
         [Display(Name = "Author First Name")]
         [Required(ErrorMessage = "Książka musi mieć autora.")]
+        [StringLength(50, ErrorMessage = "Name too long.")]
         public string AuthorFirstName { get; set; }
         [Display(Name = "Author Last Name")]
         [Required(ErrorMessage = "Książka musi mieć autora.")]
+        [StringLength(50, ErrorMessage = "Name too long.")]
         public string AuthorLastName { get; set; }
         [StringLength(2550, ErrorMessage = "Description too long.")]
         public string Description { get; set; }

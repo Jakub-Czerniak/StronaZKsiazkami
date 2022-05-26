@@ -184,11 +184,22 @@ namespace StronaZKsiazkami.Controllers
                 return RedirectToAction("Cart");
         }
 
-        public ActionResult Buy(List<CartItemModel> cart)
+        public ActionResult Buy()
         {
+            ViewBag.Message = "Go to buy screen.";
 
-            return RedirectToAction("Cart");
+            return View();
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Buy(OrderModel model)
+        {
+            V
+
+            return View();
+        }
+
+
     }
 }
