@@ -49,6 +49,28 @@ namespace StronaZKsiazkami.Controllers
 
             return View();
         }
+        public ActionResult AddReview(int id)
+        {
+            ReviewModel Review = new ReviewModel();
+            Review.BookId = id;
+
+            ViewBag.Message = "Adding a new review to DB";
+
+            return View(Review);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddReview(ReviewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ReviewProcessor.CreateReview(model.TextReview, model.Rating, model.Username, model.BookId);
+                return RedirectToAction("index");
+            }
+
+            return View();
+        }
 
         public ActionResult BookDetails(int id)
         {
