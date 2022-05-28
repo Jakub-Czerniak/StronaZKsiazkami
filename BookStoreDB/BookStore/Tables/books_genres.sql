@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[books_genres]
+(
+	book_genre_id INT IDENTITY (1,1) PRIMARY KEY,
+	genre_id INT NOT NULL,
+	book_id INT NOT NULL,
+
+	CONSTRAINT fk1_genre FOREIGN KEY (genre_id) REFERENCES genres (genre_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk2_book FOREIGN KEY (book_id) REFERENCES books (book_id) ON DELETE CASCADE ON UPDATE CASCADE
+)
