@@ -69,6 +69,15 @@ namespace StronaZKsiazkami.Controllers
             return View(Book);
         }
 
+        public ActionResult OrderDetails(int id)
+        {
+            /*ViewBag.Message = "Order details."
+
+            ViewData["Order"] =
+            ViewData["OrderDetails"]
+            return View(Order);*/
+        }
+
         public ActionResult ViewAllBooks()
         {
             ViewBag.Message = "List of all books.";
@@ -195,11 +204,58 @@ namespace StronaZKsiazkami.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Buy(OrderModel model)
         {
-            V
+            List<CartItemModel> cart = (List<CartItemModel>)Session["cart"];
+            decimal total = cart.Sum(item => item.Total * item.Count);
+            model.TotalCost = total;
+            
+            if (ModelState.IsValid && cart.Count>0)
+            {
+                var data = OrderProcessor.PlaceOrder(model.FirstName, model.LastName, model.City, model.Address, model.Apartment, model.Postcode, model.TotalCost);
+                
+                foreach (CartItemModel item in cart)
+                {
+                    OrderDetailModel detail = new OrderDetailModel
+                    {
+                        OrderId = data[0].Id,
+                        BookId = item.BookId,
+                        Amount = item.Count
+                    };
+                    OrderProcessor.AddOrderDetails(detail.OrderId,detail.BookId,detail.Amount);
+                }
 
-            return View();
+                return RedirectToAction("index");
+            }
+
+            return RedirectToAction("ViewAllBooks");
         }
 
+        public ActionResult ViewOrders()
+        {
+            ViewBag.Message = "List of all orders.";
+
+            var data = OrderProcessor.LoadOrders();
+            List<OrderModel> orders = new List<OrderModel>();
+
+            foreach (var order in data)
+            {
+                orders.Add(new OrderModel
+                {
+                    Id = order.Id,
+                    FirstName = order.FirstName,
+                    LastName = order.LastName,
+                    City = order.City,
+                    Address = order.Address,
+                    Apartment = order.Apartment,
+                    Postcode = order.Postcode,
+                    TotalCost = order.TotalCost,
+                    Status = order.Status,
+                    OrderDate = order.OrderDate
+                }
+                    );
+            }
+
+            return View(orders);
+        }
 
     }
 }

@@ -11,15 +11,17 @@ namespace StronaZKsiazkami.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Please input your name.")]
         [StringLength(50, ErrorMessage = "Name too long")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Please input your name.")]
         [StringLength(50, ErrorMessage = "Name too long")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please input your city.")]
         public string City { get; set; }
         [Required(ErrorMessage = "Please input your adress.")]
         [StringLength(255, ErrorMessage = "Adress too long")]
-        public string Adress { get; set; }
+        public string Address { get; set; }
         [StringLength(10, ErrorMessage = "Apartment too long")]
         public string Apartment { get; set; }
         [StringLength(6, ErrorMessage = "Postal code too long")]
@@ -27,10 +29,9 @@ namespace StronaZKsiazkami.Models
         public string Postcode { get; set; }
         public System.DateTime OrderDate { get; set; }
         public decimal TotalCost { get; set; }
-        [Required(ErrorMessage = "Please input your adress.")]
         [StringLength(255, ErrorMessage = "Status too long")]
         public string Status { get; set; }
-        public List<OrderDetailModel> OrderDetails { get; set;}
+        public List<CartItemModel> CartItems { get; set;}
 
     }
 }

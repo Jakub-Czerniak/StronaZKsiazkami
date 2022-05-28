@@ -67,8 +67,12 @@
     <Build Include="BookStore\Programmability\Stored Procedures\AddNewBook.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindAllBooks.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindBookById.sql" />
-    <Build Include="BookStore\Tables\adresses.sql" />
+    <Build Include="BookStore\Tables\addresses.sql" />
     <Build Include="BookStore\Tables\orders.sql" />
     <Build Include="BookStore\Tables\order_detail.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\PlaceOrder.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\AddOrderDetails.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindAllOrders.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindOrderDetailsById.sql" />
   </ItemGroup>
 </Project>

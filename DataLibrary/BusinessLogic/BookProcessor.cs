@@ -45,5 +45,6 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<BookModel>(sql, data);
         }
+
     }
 }
