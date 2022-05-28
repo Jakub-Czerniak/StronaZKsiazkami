@@ -41,7 +41,7 @@ namespace StronaZKsiazkami.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddBook(BookModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount, model.Genre_name);
                 return RedirectToAction("index");
@@ -55,7 +55,7 @@ namespace StronaZKsiazkami.Controllers
             var data = BookProcessor.LoadBook(id);
             BookModel Book = new BookModel();
 
-            if(data.Count()==0)
+            if (data.Count() == 0)
                 return View("index");
 
             Book.Id = data[0].Id;
@@ -70,14 +70,14 @@ namespace StronaZKsiazkami.Controllers
             return View(Book);
         }
 
-        public ActionResult OrderDetails(int id)
+        /*public ActionResult OrderDetails(int id)
         {
             /*ViewBag.Message = "Order details."
 
             ViewData["Order"] =
             ViewData["OrderDetails"]
             return View(Order);*/
-        }
+        //}
 
         public ActionResult ViewAllBooks()
         {
