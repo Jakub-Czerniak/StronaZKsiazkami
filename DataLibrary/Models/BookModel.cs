@@ -15,5 +15,6 @@ namespace DataLibrary.Models
         public decimal Price { get; set; }
         public string Short_desc { get; set; }
         public int Amount { get; set; }
+        public string Genre_name    { get; set; }
     }
 }

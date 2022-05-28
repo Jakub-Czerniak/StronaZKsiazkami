@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{d3ab4930-a65c-4734-b995-75ed15b9a40a}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -22,6 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <AssemblyOwner>
+    </AssemblyOwner>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -70,8 +72,21 @@
     <Build Include="BookStore\Tables\addresses.sql" />
     <Build Include="BookStore\Tables\orders.sql" />
     <Build Include="BookStore\Tables\order_detail.sql" />
+    <Build Include="BookStore\Tables\genres.sql" />
+    <Build Include="BookStore\Tables\books_genres.sql" />
+    <Build Include="BookStore\Tables\reviews.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindAdressById.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindAuthorByID.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookByAuthorName.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookByAuthorId.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookByTitle.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindGenreById.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindOrderById.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindReviewById.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\PlaceReview.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\PlaceOrder.sql" />
-    <Build Include="BookStore\Programmability\Stored Procedures\AddOrderDetails.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\AddOrderDetail.sql" />
+     <Build Include="BookStore\Programmability\Stored Procedures\AddOrderDetails.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindAllOrders.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindOrderDetailsById.sql" />
   </ItemGroup>
