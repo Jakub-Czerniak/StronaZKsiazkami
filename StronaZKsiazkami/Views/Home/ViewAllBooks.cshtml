@@ -42,6 +42,7 @@
             <td>
                 @Html.ActionLink("Details", "BookDetails", new { id = item.Id }) |
                 @Html.ActionLink("Add to cart", "AddToCart", new { id = item.Id }) |
+                @Html.ActionLink("Show reviews", "BookReviews", new {id = item.Id}) |
                 @Html.ActionLink("Review", "AddReview", new { id = item.Id })
             </td>
         </tr>

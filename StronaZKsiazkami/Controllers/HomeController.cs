@@ -91,6 +91,26 @@ namespace StronaZKsiazkami.Controllers
 
             return View(Book);
         }
+        public ActionResult BookReviews(int id)
+        {
+            var data = ReviewProcessor.LoadReviewsByBookId(id);
+            List<ReviewModel> reviews = new List<ReviewModel>();
+
+            foreach (var review in data)
+            {
+                reviews.Add(new ReviewModel
+                {
+                    Id = review.Id,
+                    BookId = review.BookId,
+                    Username=review.Username,
+                    Rating = review.Rating,
+                    TextReview=review.TextReview
+                }
+                    );
+            }
+
+            return View(reviews);
+        }
 
         /*public ActionResult OrderDetails(int id)
         {

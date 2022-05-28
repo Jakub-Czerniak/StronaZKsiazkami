@@ -41,7 +41,7 @@ namespace DataLibrary.BusinessLogic
             {
                 BookId = id
             };
-            string sql = @"EXECUTE FindReviewById @Id";
+            string sql = @"EXECUTE FindReviewsByBookId @BookId";
 
             return SqlDataAccess.LoadData<ReviewModel>(sql, data);
         }
