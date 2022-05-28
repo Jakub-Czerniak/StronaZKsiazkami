@@ -10,7 +10,7 @@ namespace DataLibrary.BusinessLogic
 {
     public static class BookProcessor
     {
-        public static int CrateBook(string title, string author_first_name, string author_last_name, string description, decimal price, int amount)
+        public static int CrateBook(string title, string author_first_name, string author_last_name, string description, decimal price, int amount, string genre_name)
         {
             BookModel data = new BookModel 
             {
@@ -19,11 +19,12 @@ namespace DataLibrary.BusinessLogic
                 Author_last_name = author_last_name,
                 Short_desc = description,
                 Price = price,
-                Amount = amount
+                Amount = amount,
+                Genre_name = genre_name
             };
 
             string sql = @"EXECUTE AddNewBook @Title,  @Author_first_name, @Author_last_name, @Price, 
-                            @Short_desc, @Amount";
+                            @Short_desc, @Amount, @Genre_name";
 
             return SqlDataAccess.SaveData(sql, data);
         }

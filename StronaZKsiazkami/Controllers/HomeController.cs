@@ -43,7 +43,7 @@ namespace StronaZKsiazkami.Controllers
         {
             if(ModelState.IsValid)
             {
-                BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount);
+                BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount, model.Genre_name);
                 return RedirectToAction("index");
             }
 
@@ -65,6 +65,7 @@ namespace StronaZKsiazkami.Controllers
             Book.Description = data[0].Short_desc;
             Book.Price = data[0].Price;
             Book.Amount = data[0].Amount;
+            Book.Genre_name = data[0].Genre_name;
 
             return View(Book);
         }
@@ -86,7 +87,8 @@ namespace StronaZKsiazkami.Controllers
                     AuthorLastName = book.Author_last_name,
                     Description = book.Short_desc,
                     Amount = book.Amount,
-                    Price = book.Price
+                    Price = book.Price,
+                    Genre_name = book.Genre_name
                 }
                     );
             }
@@ -195,7 +197,7 @@ namespace StronaZKsiazkami.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Buy(OrderModel model)
         {
-            V
+            
 
             return View();
         }
