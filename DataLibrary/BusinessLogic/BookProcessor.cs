@@ -23,7 +23,7 @@ namespace DataLibrary.BusinessLogic
             };
 
             string sql = @"EXECUTE AddNewBook @Title,  @Author_first_name, @Author_last_name, @Price, 
-                            @Description, @Amount";
+                            @Short_desc, @Amount";
 
             return SqlDataAccess.SaveData(sql, data);
         }
