@@ -59,6 +59,29 @@ namespace StronaZKsiazkami.Controllers
             return View(Review);
         }
 
+        public ActionResult SearchForBooks(string search)
+        {
+            var data = BookProcessor.LoadBooksBySearch(search);
+            List<BookModel> books = new List<BookModel>();
+
+            foreach (var book in data)
+            {
+                books.Add(new BookModel
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirstName = book.Author_first_name,
+                    AuthorLastName = book.Author_last_name,
+                    Description = book.Short_desc,
+                    Amount = book.Amount,
+                    Price = book.Price,
+                    Genre_name = book.Genre_name
+                }
+                    );
+            }
+            return View(books);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddReview(ReviewModel model)

@@ -90,5 +90,6 @@
     <Build Include="BookStore\Programmability\Stored Procedures\FindAllOrders.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindOrderDetailsById.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\FindReviewsByBookId.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookByString.sql" />
   </ItemGroup>
 </Project>

@@ -46,6 +46,15 @@ namespace DataLibrary.BusinessLogic
 
             return SqlDataAccess.LoadData<BookModel>(sql, data);
         }
+        public static List<BookModel> LoadBooksBySearch(string param1)
+        {
+            BookModel data = new BookModel
+            {
+                Title = param1
+            };
+            string sql = @"EXECUTE FindBookByString @Title";
+            return SqlDataAccess.LoadData<BookModel>(sql, data);
+        }
 
     }
 }
