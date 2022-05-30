@@ -11,5 +11,6 @@ namespace DataLibrary.Models
         public int BookId { get; set; }
         public int OrderId { get; set; }
         public int Amount { get; set; }
+        public string BookTitle { get; set; }
     }
 }

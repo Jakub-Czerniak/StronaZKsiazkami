@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLibrary;
 using DataLibrary.BusinessLogic;
+using System.Dynamic;
 
 namespace StronaZKsiazkami.Controllers
 {
@@ -135,14 +136,75 @@ namespace StronaZKsiazkami.Controllers
             return View(reviews);
         }
 
-        /*public ActionResult OrderDetails(int id)
+        public ActionResult OrderDetails(int id)
         {
-            /*ViewBag.Message = "Order details."
+            ViewBag.Message = "Order details.";
 
-            ViewData["Order"] =
-            ViewData["OrderDetails"]
-            return View(Order);*/
-        //}
+            dynamic model = new ExpandoObject();
+
+            var data = OrderProcessor.LoadDetails(id);
+            List<OrderDetailModel> orderDetails = new List<OrderDetailModel>();
+            foreach (var detail in data)
+            {
+                orderDetails.Add(new OrderDetailModel
+                {
+                    BookTitle = detail.BookTitle,
+                    Amount = detail.Amount
+                }
+                );
+            }
+
+            var dataOrder = OrderProcessor.LoadOrder(id);
+            List<OrderModel> order = new List<OrderModel>();
+            order.Add(new OrderModel
+            {
+                Id = dataOrder[0].Id,
+                FirstName = dataOrder[0].FirstName,
+                LastName = dataOrder[0].LastName,
+                Address = dataOrder[0].Address,
+                City = dataOrder[0].City,
+                Postcode = dataOrder[0].Postcode,
+                TotalCost = dataOrder[0].TotalCost,
+                OrderDate = dataOrder[0].OrderDate,
+                Status = dataOrder[0].Status,
+                Apartment = dataOrder[0].Apartment
+            });
+
+            model.OrderDetails = orderDetails;
+            model.Order = order;
+
+            return View(model);
+        }
+
+        public ActionResult DeleteOrder(int id)
+        {
+            var data = OrderProcessor.DeleteOrder(id);
+
+            return RedirectToAction("ViewOrders");
+        }
+
+        public ActionResult EditStatus(int id)
+        {
+            ViewBag.Message = "Edit status of order.";
+            OrderModel order = new OrderModel();
+            order.Id = id;
+
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStatus(OrderModel order)
+        {
+            if (ModelState.IsValidField("Status"))
+            {
+                _ = OrderProcessor.EditStatus(order.Id, order.Status);
+                return RedirectToAction("OrderDetails", new { Id = order.Id });
+            }
+
+            return View();
+        }
+
 
         public ActionResult ViewAllBooks()
         {
