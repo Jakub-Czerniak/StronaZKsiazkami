@@ -13,7 +13,7 @@ BEGIN
 	IF NOT EXISTS
 	(
 		SELECT * FROM books
-		WHERE title=@title AND price=@price
+		WHERE title=@title 
 	)
 	BEGIN
 		SET @author_id = (SELECT author_id FROM authors
@@ -36,9 +36,11 @@ BEGIN
 	END
 	ELSE
 		DECLARE @remaining_amount INT;
-		SET @remaining_amount = (SELECT amount FROM books WHERE title=@title AND price=@price)
+		SET @remaining_amount = (SELECT amount FROM books WHERE title=@title)
 		SET @amount = @remaining_amount + @amount
-		UPDATE books SET amount = @amount WHERE	 title=@title AND price=@price
+		UPDATE books SET amount = @amount WHERE	 title=@title 
+		UPDATE books SET price = @price  WHERE	title=@title 
+		UPDATE books SET short_desc = @desc  WHERE	title=@title 
 END
 ELSE
 BEGIN

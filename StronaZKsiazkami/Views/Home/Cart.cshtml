@@ -40,7 +40,7 @@
 }
     @{
         List<CartItemModel> cart = (List<CartItemModel>)Session["cart"];
-        decimal total = cart.Sum(item => item.Total * item.Count);
+        decimal total = cart.Sum(item => item.Total);
         string totalStr = total.ToString("0.##");
     }
     Total @totalStr |

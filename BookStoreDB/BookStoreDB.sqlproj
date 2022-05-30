@@ -93,5 +93,7 @@
     <Build Include="BookStore\Programmability\Stored Procedures\FindBookByString.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\ChangeOrderStatus.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\DeleteOrder.sql" />
+    <Build Include="BookStore\Tables\employess.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\Login.sql" />
   </ItemGroup>
 </Project>

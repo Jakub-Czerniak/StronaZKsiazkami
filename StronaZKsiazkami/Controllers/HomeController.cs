@@ -17,22 +17,11 @@ namespace StronaZKsiazkami.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
 
         public ActionResult AddBook()
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             ViewBag.Message = "Adding a new book to DB";
 
             return View();
@@ -42,6 +31,8 @@ namespace StronaZKsiazkami.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddBook(BookModel model)
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             if (ModelState.IsValid)
             {
                 BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount, model.Genre_name);
@@ -90,10 +81,10 @@ namespace StronaZKsiazkami.Controllers
             if (ModelState.IsValid)
             {
                 ReviewProcessor.CreateReview(model.TextReview, model.Rating, model.Username, model.BookId);
-                return RedirectToAction("index");
+                return RedirectToAction("BookReviews", new { id = model.BookId });
             }
 
-            return View();
+            return RedirectToAction("ViewAllBooks");
         }
 
         public ActionResult BookDetails(int id)
@@ -126,9 +117,9 @@ namespace StronaZKsiazkami.Controllers
                 {
                     Id = review.Id,
                     BookId = review.BookId,
-                    Username=review.Username,
+                    Username = review.Username,
                     Rating = review.Rating,
-                    TextReview=review.TextReview
+                    TextReview = review.TextReview
                 }
                     );
             }
@@ -138,6 +129,8 @@ namespace StronaZKsiazkami.Controllers
 
         public ActionResult OrderDetails(int id)
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             ViewBag.Message = "Order details.";
 
             dynamic model = new ExpandoObject();
@@ -178,6 +171,8 @@ namespace StronaZKsiazkami.Controllers
 
         public ActionResult DeleteOrder(int id)
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             var data = OrderProcessor.DeleteOrder(id);
 
             return RedirectToAction("ViewOrders");
@@ -185,6 +180,8 @@ namespace StronaZKsiazkami.Controllers
 
         public ActionResult EditStatus(int id)
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             ViewBag.Message = "Edit status of order.";
             OrderModel order = new OrderModel();
             order.Id = id;
@@ -196,6 +193,8 @@ namespace StronaZKsiazkami.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditStatus(OrderModel order)
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             if (ModelState.IsValidField("Status"))
             {
                 _ = OrderProcessor.EditStatus(order.Id, order.Status);
@@ -209,7 +208,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult ViewAllBooks()
         {
             ViewBag.Message = "List of all books.";
-            
+
             var data = BookProcessor.LoadBooks();
             List<BookModel> books = new List<BookModel>();
 
@@ -241,31 +240,7 @@ namespace StronaZKsiazkami.Controllers
             if (Session["cart"] == null)
             {
                 List<CartItemModel> cartItems = new List<CartItemModel>();
-                cartItems.Add(new CartItemModel 
-                {
-                    BookId = data[0].Id,
-                    Title = data[0].Title,
-                    Count = 1,
-                    Total = data[0].Price
-                }                    
-                    );
-                Session["cart"] = cartItems;
-            }
-            else
-            {
-                List<CartItemModel> cartItems = (List<CartItemModel>)Session["cart"];
-                foreach (var item in cartItems)
-                {
-                    if (item.BookId == id)
-                    {
-                        item.Count += 1;
-                        item.Total +=data[0].Price;
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) 
-                {
+                if (data[0].Amount > 1)
                     cartItems.Add(new CartItemModel
                     {
                         BookId = data[0].Id,
@@ -273,7 +248,40 @@ namespace StronaZKsiazkami.Controllers
                         Count = 1,
                         Total = data[0].Price
                     }
-                    );
+                        );
+
+
+                Session["cart"] = cartItems;
+            }
+            else
+            {
+                List<CartItemModel> cartItems = (List<CartItemModel>)Session["cart"];
+
+                foreach (var item in cartItems)
+                {
+                    if (item.BookId == id)
+                    {
+                        found = true;
+                        if (data[0].Amount>item.Count)
+                        {
+                            item.Count += 1;
+                            item.Total += data[0].Price;
+                            break;
+                        }
+                        
+                    }
+                }
+                if (!found)
+                {
+                    if (data[0].Amount > 1)
+                        cartItems.Add(new CartItemModel
+                        {
+                            BookId = data[0].Id,
+                            Title = data[0].Title,
+                            Count = 1,
+                            Total = data[0].Price
+                        }
+                        );
                 }
 
                 Session["cart"] = cartItems;
@@ -301,8 +309,8 @@ namespace StronaZKsiazkami.Controllers
                 return RedirectToAction("ViewAllBooks");
             }
             else
-            {  
-                for (int i=0;i<cartItems.Capacity;i++)
+            {
+                for (int i = 0; i < cartItems.Capacity; i++)
                 {
                     if (cartItems[i].BookId == id)
                     {
@@ -317,9 +325,9 @@ namespace StronaZKsiazkami.Controllers
                 }
             }
 
-                Session["cart"] = cartItems;
+            Session["cart"] = cartItems;
 
-                return RedirectToAction("Cart");
+            return RedirectToAction("Cart");
         }
 
         public ActionResult Buy()
@@ -336,11 +344,11 @@ namespace StronaZKsiazkami.Controllers
             List<CartItemModel> cart = (List<CartItemModel>)Session["cart"];
             decimal total = cart.Sum(item => item.Total * item.Count);
             model.TotalCost = total;
-            
-            if (ModelState.IsValid && cart.Count>0)
+
+            if (ModelState.IsValid && cart.Count > 0)
             {
                 var data = OrderProcessor.PlaceOrder(model.FirstName, model.LastName, model.City, model.Address, model.Apartment, model.Postcode, model.TotalCost);
-                
+
                 foreach (CartItemModel item in cart)
                 {
                     OrderDetailModel detail = new OrderDetailModel
@@ -349,7 +357,7 @@ namespace StronaZKsiazkami.Controllers
                         BookId = item.BookId,
                         Amount = item.Count
                     };
-                    OrderProcessor.AddOrderDetails(detail.OrderId,detail.BookId,detail.Amount);
+                    OrderProcessor.AddOrderDetails(detail.OrderId, detail.BookId, detail.Amount);
                 }
 
                 return RedirectToAction("index");
@@ -360,6 +368,8 @@ namespace StronaZKsiazkami.Controllers
 
         public ActionResult ViewOrders()
         {
+            if (Session["login"] == null)
+                return RedirectToAction("index");
             ViewBag.Message = "List of all orders.";
 
             var data = OrderProcessor.LoadOrders();
@@ -384,6 +394,36 @@ namespace StronaZKsiazkami.Controllers
             }
 
             return View(orders);
+        }
+
+        public ActionResult Login()
+        {
+            ViewBag.Message = "Login page";
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(EmployeModel employe)
+        {
+            if (ModelState.IsValid)
+            {
+                var data = EmployeProcessor.Login(employe.Email, employe.Password);
+                if (data.Count != 0)
+                {
+                    Session["login"] = true;
+                    return RedirectToAction("ViewOrders");
+                }
+            }
+
+            return RedirectToAction("ViewAllBooks");
+        }
+
+        public ActionResult Logout()
+        {
+            Session["login"] = null;
+            return RedirectToAction("index");
         }
 
     }
