@@ -12,16 +12,13 @@ namespace StronaZKsiazkami.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+
 
 
         public ActionResult AddBook()
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             ViewBag.Message = "Adding a new book to DB";
 
             return View();
@@ -32,7 +29,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult AddBook(BookModel model)
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             if (ModelState.IsValid)
             {
                 string[] genres = model.Genres.Split(',');
@@ -50,7 +47,7 @@ namespace StronaZKsiazkami.Controllers
                 }
                 
 
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             }
 
             return View();
@@ -107,7 +104,7 @@ namespace StronaZKsiazkami.Controllers
             
 
             if (data.Count() == 0)
-                return View("index");
+                return View("ViewAllBooks");
 
             Book.Id = data[0].Id;
             Book.Title = data[0].Title;
@@ -166,7 +163,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult OrderDetails(int id)
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             ViewBag.Message = "Order details.";
 
             dynamic model = new ExpandoObject();
@@ -208,7 +205,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult DeleteOrder(int id)
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             var data = OrderProcessor.DeleteOrder(id);
 
             return RedirectToAction("ViewOrders");
@@ -217,7 +214,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult EditStatus(int id)
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             ViewBag.Message = "Edit status of order.";
             OrderModel order = new OrderModel();
             order.Id = id;
@@ -230,7 +227,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult EditStatus(OrderModel order)
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             if (ModelState.IsValidField("Status"))
             {
                 _ = OrderProcessor.EditStatus(order.Id, order.Status);
@@ -396,7 +393,7 @@ namespace StronaZKsiazkami.Controllers
                     OrderProcessor.AddOrderDetails(detail.OrderId, detail.BookId, detail.Amount);
                 }
 
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             }
 
             return RedirectToAction("ViewAllBooks");
@@ -405,7 +402,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult ViewOrders()
         {
             if (Session["login"] == null)
-                return RedirectToAction("index");
+                return RedirectToAction("ViewAllBooks");
             ViewBag.Message = "List of all orders.";
 
             var data = OrderProcessor.LoadOrders();
@@ -459,7 +456,7 @@ namespace StronaZKsiazkami.Controllers
         public ActionResult Logout()
         {
             Session["login"] = null;
-            return RedirectToAction("index");
+            return RedirectToAction("ViewAllBooks");
         }
 
     }
