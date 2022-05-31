@@ -29,9 +29,9 @@ namespace StronaZKsiazkami.Models
         [Required(ErrorMessage = "Książka musi mieć cene.")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        [Display(Name = "Genre")]
+        [Display(Name = "Genres")]
         [Required(ErrorMessage ="Książka musi mieć gatunek.")]
         [StringLength(255, ErrorMessage = "Name too long.")]
-        public string Genre_name { get; set; }
+        public string Genres { get; set; }
     }
 }

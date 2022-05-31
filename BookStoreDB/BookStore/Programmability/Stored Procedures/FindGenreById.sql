@@ -3,6 +3,6 @@
 	@genre_id INT
 )
 AS 
-SELECT genre_name
+SELECT genre_id as Id, genre_name as GenreName
 FROM genres
 WHERE genre_id = @genre_id

@@ -56,13 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\BookGenreProcessor.cs" />
     <Compile Include="BusinessLogic\BookProcessor.cs" />
     <Compile Include="BusinessLogic\EmployeProcessor.cs" />
+    <Compile Include="BusinessLogic\GenreProcessor.cs" />
     <Compile Include="BusinessLogic\ReviewProcessor.cs" />
     <Compile Include="BusinessLogic\OrderProcessor.cs" />
     <Compile Include="DataAccess\SqlDataAccess.cs" />
+    <Compile Include="Models\BookGenre.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\EmployeModel.cs" />
+    <Compile Include="Models\GenreModel.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\OrderModel.cs" />

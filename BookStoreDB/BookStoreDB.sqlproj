@@ -95,5 +95,11 @@
     <Build Include="BookStore\Programmability\Stored Procedures\DeleteOrder.sql" />
     <Build Include="BookStore\Tables\employess.sql" />
     <Build Include="BookStore\Programmability\Stored Procedures\Login.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\AddBookGenre.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\AddGenre.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\GetAllBookGenre.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\GetAllGenres.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindBookIdByOtherData.sql" />
+    <Build Include="BookStore\Programmability\Stored Procedures\FindGenreByName.sql" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DataLibrary.Models
 {
     public class BookModel
@@ -15,6 +16,6 @@ namespace DataLibrary.Models
         public decimal Price { get; set; }
         public string Short_desc { get; set; }
         public int Amount { get; set; }
-        public string Genre_name    { get; set; }
+        public List<string> Genres { get; set; }
     }
 }

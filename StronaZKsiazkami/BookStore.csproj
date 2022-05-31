@@ -127,9 +127,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BookGenre.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\CartItemModel.cs" />
     <Compile Include="Models\EmployeModel.cs" />
+    <Compile Include="Models\GenreModel.cs" />
     <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\OrderDetailModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -185,6 +187,8 @@
     <Content Include="Views\Home\DeleteOrder.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
+    <Content Include="Views\Home\BookGenres.cshtml" />
+    <Content Include="Views\Home\AddBookGenre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
