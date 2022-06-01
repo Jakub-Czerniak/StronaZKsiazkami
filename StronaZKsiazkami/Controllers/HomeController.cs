@@ -13,8 +13,6 @@ namespace StronaZKsiazkami.Controllers
     public class HomeController : Controller
     {
 
-
-
         public ActionResult AddBook()
         {
             if (Session["login"] == null)
@@ -33,9 +31,8 @@ namespace StronaZKsiazkami.Controllers
             if (ModelState.IsValid)
             {
                 string[] genres = model.Genres.Split(',');
-                BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount);
+                var data = BookProcessor.CrateBook(model.Title, model.AuthorFirstName, model.AuthorLastName, model.Description, model.Price, model.Amount);
                 
-                var data = BookProcessor.LoadBooksByData(model.Title, model.Description, model.Price, model.Amount);
                 int book_id = data[0].Id;
                 foreach (string genre in genres)
                 {

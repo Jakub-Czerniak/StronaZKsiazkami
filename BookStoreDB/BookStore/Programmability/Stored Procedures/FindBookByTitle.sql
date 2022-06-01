@@ -1,8 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[FindBookByTitle]
 (
-	@title INT
+	@title VARCHAR(255)
 )
 AS
-SELECT book_id, author_id, price, short_desc, amount
+	SELECT  books.book_id as Id
 FROM books
+INNER JOIN authors on books.author_id = authors.author_id
 WHERE title = @title

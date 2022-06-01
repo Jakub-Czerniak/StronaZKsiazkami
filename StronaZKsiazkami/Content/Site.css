@@ -21,4 +21,10 @@ input,
 select,
 textarea {
     max-width: 280px;
+    max-height: 1000px;
+}
+
+.editor-multiline-field textarea {
+    width: 280px;
+    
 }

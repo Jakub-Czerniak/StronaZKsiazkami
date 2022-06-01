@@ -27,6 +27,8 @@ BEGIN
 		UPDATE books SET amount = @amount WHERE	 title=@title 
 		UPDATE books SET price = @price  WHERE	title=@title 
 		UPDATE books SET short_desc = @desc  WHERE	title=@title 
+		SELECT books.book_id as Id FROM books
+		WHERE title = @title
 END
 ELSE
 BEGIN
@@ -34,5 +36,7 @@ BEGIN
 	SET @author_id = SCOPE_IDENTITY()
 	INSERT INTO books(title, author_id, price, short_desc, amount) VALUES(@title, @author_id, @price, @desc, @amount);
 	SET @book_id = SCOPE_IDENTITY() 
+	SELECT SCOPE_IDENTITY() as Id
 END
+
 GO
